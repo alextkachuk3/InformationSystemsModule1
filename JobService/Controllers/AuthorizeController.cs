@@ -2,9 +2,13 @@
 
 namespace JobService.Controllers
 {
-    public class LoginController : Controller
+    public class AuthorizeController : Controller
     {
         public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult Register()
         {
             return View();
         }
