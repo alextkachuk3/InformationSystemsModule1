@@ -1,33 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@{
+
+}
 
 <div class="container">
-    <form>
-        <!-- Email input -->
+    <form method="post">
         <div class="row justify-content-center form-outline">
             <div class="col-md-4 col-sm-12">
-                <input type="email" id="loginName" class="form-control" />
-                <label class="form-label" for="loginName">Email or username</label>
+                <input name="login" id="authLogin" class="form-control" />
+                <label class="form-label" for="authLogin">Login</label>
             </div>
         </div>
-
-        <!-- Password input -->
         <div class="row justify-content-center form-outline">
             <div class="col-md-4 col-sm-12">
-                <input type="password" id="loginPassword" class="form-control" />
-                <label class="form-label" for="loginPassword">Password</label>
+                <input name="password" type="password" id="authPassword" class="form-control" />
+                <label class="form-label" for="authPassword">Password</label>
             </div>
         </div>
-
-        <!-- Submit button -->
         <div class="row justify-content-center form-outline">
             <div class="col-md-4 col-sm-12">
-                <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>                
             </div>
         </div>
-
-        <!-- Register buttons -->
+        <div class="row justify-content-center form-outline">
+            <div class="col-md-4 col-sm-12">
+                <p>@ViewBag.AuthError</p>
+            </div>
+        </div>
+        
         <div class="text-center">
             <p>Not a member? <a class="" asp-area="" asp-controller="authorize" asp-action="register">Register</a></p>
         </div>
