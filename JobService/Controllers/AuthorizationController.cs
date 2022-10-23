@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using JobService.Data;
 using JobService.Services.UserService;
+using JobService.Models;
 
 namespace JobService.Controllers
 {
@@ -25,8 +26,14 @@ namespace JobService.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            bool authSuccess = true;
-            if (authSuccess)
+            User? user = _userService.GetUser(username);
+
+            if(user == null)
+            {
+                ViewBag.AuthError = "User with this username not exists!";
+                return View();
+            }
+            else if(user.CheckCredentials(password))
             {
                 var claims = new List<Claim>();
 
@@ -34,11 +41,11 @@ namespace JobService.Controllers
 
                 if (username == "admin")
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, "admin"));
+                    claims.Add(new Claim(ClaimTypes.Role, user.Role!));
                 }
                 else
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, "user"));
+                    claims.Add(new Claim(ClaimTypes.Role, user.Role!));
                 }
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
@@ -49,7 +56,7 @@ namespace JobService.Controllers
             }
             else
             {
-                ViewBag.AuthError = "Wrong login or password!";
+                ViewBag.AuthError = "Wrong password!";
                 return View();
             }
         }

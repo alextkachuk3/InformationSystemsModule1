@@ -7,12 +7,19 @@ namespace JobService.Models
     public class User
     {
         public User() { }
+
         public User(string username, string password, string firstName, string lastName)
         {
             Username = username;
             PasswordHash = password;
             FirstName = firstName;
             LastName = lastName;
+            Role = "user";
+        }
+
+        public bool CheckCredentials(string password)
+        {
+            return PasswordHash!.Equals(password);
         }
 
         public int Id { get; set; }
@@ -22,7 +29,10 @@ namespace JobService.Models
         public string? Username { get; set; }
 
         [Required]
-        public string? PasswordHash { get; }
+        public string? PasswordHash { get; set; }
+
+        [Required]
+        public string? Role { get; set; }
 
         [Required]
         [StringLength(maximumLength: 100)]
