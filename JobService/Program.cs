@@ -1,4 +1,5 @@
 using JobService.Data;
+using JobService.Services.UserService;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
+builder.Services.AddScoped<IUserService, UserService>();
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
@@ -31,8 +34,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.MapControllerRoute(name: "auth",
-                pattern: "{controller=AuthorizeController}/{action=Login}/");
 
 app.Run();

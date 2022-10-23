@@ -3,17 +3,26 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JobService.Models
 {
-    [Index(nameof(Login), IsUnique = true)]
+    [Index(nameof(Username), IsUnique = true)]
     public class User
     {
+        public User() { }
+        public User(string username, string password, string firstName, string lastName)
+        {
+            Username = username;
+            PasswordHash = password;
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
         public int Id { get; set; }
 
         [Required]
-        [StringLength(maximumLength:100, MinimumLength = 4)]
-        public string? Login { get; set; }
+        [StringLength(maximumLength: 100, MinimumLength = 4)]
+        public string? Username { get; set; }
 
         [Required]
-        public string? PasswordHash { get; set; }
+        public string? PasswordHash { get; }
 
         [Required]
         [StringLength(maximumLength: 100)]
@@ -23,7 +32,6 @@ namespace JobService.Models
         [StringLength(maximumLength: 100)]
         public string? LastName { get; set; }
 
-        [Required]
         public Settlement? Settlement { get; set; }
 
         public List<HardSkill>? HardSkills { get; set; }
@@ -31,6 +39,5 @@ namespace JobService.Models
         public List<JobInfo>? JobHistory { get; set; }
 
         public List<JobVacancy>? JobVacancies { get; set; }
-
     }
 }

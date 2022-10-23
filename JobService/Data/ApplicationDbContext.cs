@@ -18,7 +18,7 @@ namespace JobService.Data
 
         public DbSet<JobInfo>? JobHistory { get; set; }
 
-        public DbSet<JobVacancy> JobVacancies { get; set; }
+        public DbSet<JobVacancy>? JobVacancies { get; set; }
 
     }
 }

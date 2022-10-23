@@ -4,7 +4,6 @@ namespace JobService.Models
 {
     public class JobVacancy
     {
-
         public int Id { get; set; }
 
         [Required]

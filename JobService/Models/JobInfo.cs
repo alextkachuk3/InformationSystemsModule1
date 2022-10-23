@@ -4,7 +4,6 @@ namespace JobService.Models
 {
     public class JobInfo
     {
-
         public int Id { get; set; }
 
         [Required]
@@ -17,6 +16,5 @@ namespace JobService.Models
 
         [Required]
         public bool CurrentJob { get; set; }
-
     }
 }
