@@ -43,6 +43,17 @@ namespace JobService.Controllers
             return View();
         }
 
+        public IActionResult AddVacancy()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddVacancy(string title, string description)
+        {
+            return View();
+        }
+
         public IActionResult ToJobseekerMode()
         {
             HttpContext.Response.Cookies.Append("mode", "jobseeker");

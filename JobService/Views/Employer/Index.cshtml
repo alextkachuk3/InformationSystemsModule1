@@ -1,5 +1,17 @@
 ﻿<div class="container">
-    <div>
-        Your job vacancies:
-    </div>
+    <form>
+        <div class="row">
+            <div class="col-sm-12">
+                <p>Your job vacancies:</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <a asp-area="" asp-controller="Employer" asp-action="AddVacancy" class="btn btn-success">Add vacancy</a>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-danger">Remove selected</button>
+            </div>
+        </div>
+    </form>    
 </div>

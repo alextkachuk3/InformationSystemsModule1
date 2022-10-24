@@ -25,7 +25,7 @@ namespace JobService.Controllers
                 }
                 else if (mode.Equals("employer"))
                 {
-                    ViewBag.Mode = "employer";
+                    return LocalRedirect("~/employer");
                 }
             }
             else
