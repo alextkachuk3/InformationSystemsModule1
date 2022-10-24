@@ -1,23 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using System;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using JobService.Data;
-using JobService.Services.UserService;
-using JobService.Models;
+using JobService.Services.VacancyService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobService.Controllers
 {
     public class EmployerController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUserService _userService;
+        private readonly IVacancyService _vacancyService;
 
-        public EmployerController(ILogger<HomeController> logger, IUserService userService)
+        public EmployerController(ILogger<HomeController> logger, IVacancyService vacancyService)
         {
             _logger = logger;
-            _userService = userService;
+            _vacancyService = vacancyService;
         }
 
         public IActionResult Index()
@@ -48,10 +43,14 @@ namespace JobService.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
-        public IActionResult AddVacancy(string title, string description)
+        public IActionResult AddVacancy(string title, string salary, string description)
         {
-            return View();
+            var user = HttpContext.User.Identity;
+            
+            _vacancyService.AddVacancy(user!.Name!, title, int.Parse(salary), description);
+            return LocalRedirect("~/employer");
         }
 
         public IActionResult ToJobseekerMode()

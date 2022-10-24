@@ -4,13 +4,23 @@ namespace JobService.Models
 {
     public class JobVacancy
     {
+        public JobVacancy() { }
+
+        public JobVacancy(User user, string title, int salary, string description)
+        {
+            User = user;
+            Title = title;
+            Salary = salary;
+            Description = description;
+        }
+
         public int Id { get; set; }
 
         [Required]
         public User? User { get; set; }
 
         [Required]
-        public string? Name { get; set; }
+        public string? Title { get; set; }
 
         [Required]
         public string? Description { get; set; }

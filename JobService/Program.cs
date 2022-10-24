@@ -1,5 +1,6 @@
 using JobService.Data;
 using JobService.Services.UserService;
+using JobService.Services.VacancyService;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IVacancyService, VacancyService>();
 
 var app = builder.Build();
 
