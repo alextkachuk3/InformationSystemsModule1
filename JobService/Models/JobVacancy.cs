@@ -15,6 +15,7 @@ namespace JobService.Models
             Description = description;
             TitleLowerCase = title.ToLower();
             DescriptionLowerCase = description.ToLower();
+            creationTime = DateTime.Now;
         }
 
         public int Id { get; set; }
@@ -43,6 +44,8 @@ namespace JobService.Models
 
         [Required]
         public bool Remote { get; set; }
+
+        public DateTime creationTime { get; set; }
 
         public Settlement? Settlement { get; set; }
 

@@ -59,18 +59,9 @@ namespace JobService.Services.VacancyService
                 _dbContext.SaveChanges();
             }
         }
-
-        public List<JobVacancy> jobVacancies(string searchInput)
-        {
-            HashSet<JobVacancy> result = new HashSet<JobVacancy>();
-            //result.Add(_dbContext.JobVacancies.Where())
-
-            return result.ToList();
-        }
-
         public List<JobVacancy> searchJobVacancies(string searchInput)
         {
-            throw new NotImplementedException();
+            return _dbContext.JobVacancies!.Where(v => v.TitleLowerCase!.Contains(searchInput)).ToList();
         }
 
         public List<JobVacancy> userJobVacancies(string username)
