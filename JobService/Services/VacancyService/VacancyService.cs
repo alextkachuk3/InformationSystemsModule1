@@ -40,5 +40,15 @@ namespace JobService.Services.VacancyService
         {
             throw new NotImplementedException();
         }
+
+        public List<JobVacancy> searchJobVacancies(string searchInput)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<JobVacancy> userJobVacancies(string username)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

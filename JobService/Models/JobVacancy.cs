@@ -25,8 +25,10 @@ namespace JobService.Models
         [Required]
         public string? Description { get; set; }
 
+        [Required]
         public int Salary { get; set; }
 
+        [Required]
         public bool Remote { get; set; }
 
         public Settlement? Settlement { get; set; }

@@ -3,9 +3,16 @@
         <label for="jobVacancyTitleInput" class="form-label">Title</label>
         <input name="title" class="form-control" id="jobVacancyTitleInput">
     </div>
+    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+        <option selected>Open this select menu</option>
+        @foreach (var region in Model)
+        {
+            <option value="@region.Id">@region.Name</option>
+        }
+    </select>
     <div class="mb-3">
         <label for="jobVacancySalaryInput" class="form-label">Salary</label>
-        <div class="input-group">            
+        <div class="input-group">
             <span class="input-group-text">$</span>
             <input name="salary" type="text" class="form-control" id="jobVacancySalaryInput">
         </div>
@@ -14,6 +21,7 @@
         <label for="jobVacancyDescriptionInput" class="form-label">Description</label>
         <textarea name="description" class="form-control" id="jobVacancyDescriptionInput" rows="15"></textarea>
     </div>
+
     <div class="mb-3">
         <button type="submit" class="btn btn-primary btn-block">Add</button>
     </div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using JobService.Services.VacancyService;
 using Microsoft.AspNetCore.Authorization;
+using JobService.Services.SettlementService;
 
 namespace JobService.Controllers
 {
@@ -8,11 +9,13 @@ namespace JobService.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IVacancyService _vacancyService;
+        private readonly ISettlementService _settlementService;
 
-        public EmployerController(ILogger<HomeController> logger, IVacancyService vacancyService)
+        public EmployerController(ILogger<HomeController> logger, IVacancyService vacancyService, ISettlementService settlementService)
         {
             _logger = logger;
             _vacancyService = vacancyService;
+            _settlementService = settlementService;
         }
 
         public IActionResult Index()
@@ -40,7 +43,8 @@ namespace JobService.Controllers
 
         public IActionResult AddVacancy()
         {
-            return View();
+            var regions = _settlementService.GetRegionsList();
+            return View(regions);
         }
 
         [Authorize]
@@ -48,7 +52,7 @@ namespace JobService.Controllers
         public IActionResult AddVacancy(string title, string salary, string description)
         {
             var user = HttpContext.User.Identity;
-            
+
             _vacancyService.AddVacancy(user!.Name!, title, int.Parse(salary), description);
             return LocalRedirect("~/employer");
         }
