@@ -1,3 +1,19 @@
-﻿<div class="text-center">
-    <h1 class="display-4">Vacancy</h1>
+﻿<div class="container">
+    <div class="mb-3">
+        <h3>@Model.Title</h3>
+    </div>
+    @if (Model.Salary > 0)
+    {
+        <div>
+            <p>Salary @Model.Salary$</p>
+        </div>
+    }
+    <div>
+        <p>@Model.Settlement.Region.Name region, @Model.Settlement.Name</p>
+    </div>
+    <div>
+        <hr class="hr my-3" />
+        <p>Description:</p>
+        <p>@Model.Description</p>
+    </div>
 </div>

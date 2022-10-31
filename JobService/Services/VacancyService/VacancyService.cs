@@ -1,5 +1,6 @@
 ﻿using JobService.Data;
 using JobService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobService.Services.VacancyService
 {
@@ -42,12 +43,12 @@ namespace JobService.Services.VacancyService
             var jobVacancy = _dbContext.JobVacancies!.Where(v => v.Id.Equals(vacancyId)).FirstOrDefault();
             if (user is null)
                 throw new InvalidOperationException("User with username: " + username + " not exists.");
-            else if(jobVacancy == null)
+            else if (jobVacancy == null)
                 throw new InvalidOperationException("Job vacancy with id: " + vacancyId + " not exists.");
-            else if(jobVacancy.User != user)
+            else if (jobVacancy.User != user)
                 throw new InvalidOperationException("User with username: " + username + " is not owner of vacancy with id " + vacancyId + ".");
             try
-            {                    
+            {
                 _dbContext.JobVacancies!.Remove(jobVacancy);
             }
             catch
@@ -59,9 +60,15 @@ namespace JobService.Services.VacancyService
                 _dbContext.SaveChanges();
             }
         }
+
+        public JobVacancy? GetVacancy(int vacancyId)
+        {
+            return _dbContext.JobVacancies!.Where(v => v.Id.Equals(vacancyId)).Include(v => v.Settlement).ThenInclude(v => v!.Region).FirstOrDefault();
+        }
+
         public List<JobVacancy> searchJobVacancies(string searchInput)
         {
-            return _dbContext.JobVacancies!.Where(v => v.TitleLowerCase!.Contains(searchInput)).ToList();
+            return _dbContext.JobVacancies!.OrderBy(v => v.creationTime).Where(v => v.TitleLowerCase!.Contains(searchInput) || v.DescriptionLowerCase!.Contains(searchInput)).ToList();
         }
 
         public List<JobVacancy> userJobVacancies(string username)

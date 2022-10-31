@@ -1,4 +1,5 @@
 ﻿using JobService.Models;
+using JobService.Services.VacancyService;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,14 +7,16 @@ namespace JobService.Controllers
 {
     public class JobVacancyController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<JobVacancyController> _logger;
+        private readonly IVacancyService _vacancyService;
 
-        public JobVacancyController(ILogger<HomeController> logger)
+        public JobVacancyController(ILogger<JobVacancyController> logger, IVacancyService vacancyService)
         {
             _logger = logger;
+            _vacancyService = vacancyService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int jobVacancyId)
         {
             if (HttpContext.Request.Cookies.ContainsKey("mode"))
             {
@@ -34,7 +37,9 @@ namespace JobService.Controllers
                 ViewBag.Mode = "jobseeker";
             }
 
-            return View();
+            var vacancy = _vacancyService.GetVacancy(jobVacancyId);
+
+            return View(vacancy);
         }
     }
 }
