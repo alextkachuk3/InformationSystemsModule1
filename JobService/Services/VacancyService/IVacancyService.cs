@@ -7,7 +7,7 @@ namespace JobService.Services.VacancyService
     {
         void AddVacancy(string username, string title, int? settlementId, int salary, string description);
 
-        void DeleteVacancy(int id);
+        void DeleteVacancy(int vacancyId, string username);
 
         List<JobVacancy> userJobVacancies(string username);
 

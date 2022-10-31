@@ -20,6 +20,25 @@ namespace JobService.Controllers
 
         public IActionResult Login()
         {
+            if (HttpContext.Request.Cookies.ContainsKey("mode"))
+            {
+                string mode = HttpContext.Request.Cookies["mode"]!;
+
+                if (mode.Equals("jobseeker"))
+                {
+                    ViewBag.Mode = "jobseeker";
+                }
+                else if (mode.Equals("employer"))
+                {
+                    ViewBag.Mode = "employer";
+                }
+            }
+            else
+            {
+                HttpContext.Response.Cookies.Append("mode", "jobseeker");
+                ViewBag.Mode = "jobseeker";
+            }
+
             return View();
         }
 

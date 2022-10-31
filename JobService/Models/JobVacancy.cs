@@ -12,6 +12,8 @@ namespace JobService.Models
             Title = title;
             Salary = salary;
             Description = description;
+            TitleLowerCase = title.ToLower();
+            DescriptionLowerCase = description.ToLower();
         }
 
         public int Id { get; set; }
@@ -24,6 +26,12 @@ namespace JobService.Models
 
         [Required]
         public string? Description { get; set; }
+
+        [Required]
+        public string? TitleLowerCase { get; set; }
+
+        [Required]
+        public string? DescriptionLowerCase { get; set; }
 
         [Required]
         public int Salary { get; set; }

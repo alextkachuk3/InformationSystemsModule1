@@ -36,14 +36,36 @@ namespace JobService.Services.VacancyService
             }
         }
 
-        public void DeleteVacancy(int id)
+        public void DeleteVacancy(int vacancyId, string username)
         {
-            throw new NotImplementedException();
+            User? user = _dbContext.Users!.FirstOrDefault(u => u.Username == username);
+            var jobVacancy = _dbContext.JobVacancies!.Where(v => v.Id.Equals(vacancyId)).FirstOrDefault();
+            if (user is null)
+                throw new InvalidOperationException("User with username: " + username + " not exists.");
+            else if(jobVacancy == null)
+                throw new InvalidOperationException("Job vacancy with id: " + vacancyId + " not exists.");
+            else if(jobVacancy.User != user)
+                throw new InvalidOperationException("User with username: " + username + " is not owner of vacancy with id " + vacancyId + ".");
+            try
+            {                    
+                _dbContext.JobVacancies!.Remove(jobVacancy);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                _dbContext.SaveChanges();
+            }
         }
 
         public List<JobVacancy> jobVacancies(string searchInput)
         {
-            throw new NotImplementedException();
+            HashSet<JobVacancy> result = new HashSet<JobVacancy>();
+            //result.Add(_dbContext.JobVacancies.Where())
+
+            return result.ToList();
         }
 
         public List<JobVacancy> searchJobVacancies(string searchInput)
@@ -53,7 +75,10 @@ namespace JobService.Services.VacancyService
 
         public List<JobVacancy> userJobVacancies(string username)
         {
-            throw new NotImplementedException();
+            User? user = _dbContext.Users!.FirstOrDefault(u => u.Username == username);
+            if (user is null)
+                throw new InvalidOperationException("User with username: " + username + " not exists.");
+            return _dbContext.JobVacancies!.Where(v => v.User!.Equals(user)).ToList();
         }
     }
 }

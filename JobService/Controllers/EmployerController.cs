@@ -38,7 +38,15 @@ namespace JobService.Controllers
                 HttpContext.Response.Cookies.Append("mode", "employer");
                 ViewBag.Mode = "employer";
             }
-            return View();
+
+            if(!HttpContext.User!.Identity!.IsAuthenticated)
+            {
+                return LocalRedirect(Url.Action("Login", "Authorization")!);
+            }
+
+            var jobVacations = _vacancyService.userJobVacancies(User.Identity!.Name!);
+
+            return View(jobVacations);
         }
 
         public IActionResult AddVacancy()
@@ -52,7 +60,6 @@ namespace JobService.Controllers
         public IActionResult AddVacancy(string title, int? settlementId, string salary, string description)
         {
             var user = HttpContext.User.Identity;
-
             _vacancyService.AddVacancy(user!.Name!, title, settlementId, int.Parse(salary), description);
             return LocalRedirect("~/employer");
         }
