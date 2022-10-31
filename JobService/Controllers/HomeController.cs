@@ -56,20 +56,9 @@ namespace JobService.Controllers
         [HttpPost]
         public IActionResult Index(string? searchWord, int? settlementId)
         {
+            if (searchWord == null && settlementId == null)
+                return Index();
             return RedirectToAction("Search", "JobVacancy", new { searchWord, settlementId });
         }
-
-        //[HttpPost]
-        //public IActionResult Search(string? searchWord, int? settlementId)
-        //{
-        //    return View(_vacancyService.SearchJobVacancies(searchWord, settlementId));
-        //}
-
-        //[HttpPost]
-        //public IActionResult Index(string? searchWord, string? settlementId)
-        //{
-        //    return LocalRedirect("~/jobvacancy/search?searchWord=" + searchWord + "&settlementId=" + settlementId);
-        //}
-
     }
 }
