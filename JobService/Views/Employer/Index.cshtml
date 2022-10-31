@@ -24,7 +24,7 @@
                                 <td class="col-1">
                                     <input name="vacancyId" class="form-check-input" type="checkbox" value="@vacancy.Id" id="vacancyIdInput- + @vacancy.Id">
                                 </td>
-                                <td class="col-10"><a href="#">@vacancy.Title</a></td>
+                                <td class="col-10"><a href="@Url.Action("index", "JobVacancy")?jobVacancyId=@vacancy.Id">@vacancy.Title</a></td>
 
                                 <td class="col-1"><a href="#" class="btn btn-warning" id="vacancyEdit + @vacancy.Id">Edit</a></td>
                             </tr>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
             }
-        }                
+        }
         <div class="row">
             <div class="col-sm-2">
                 <a asp-area="" asp-controller="Employer" asp-action="AddVacancy" class="btn btn-success">Add vacancy</a>

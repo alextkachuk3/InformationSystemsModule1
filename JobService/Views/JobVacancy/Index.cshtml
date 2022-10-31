@@ -8,9 +8,12 @@
             <p>Salary @Model.Salary$</p>
         </div>
     }
-    <div>
-        <p>@Model.Settlement.Region.Name region, @Model.Settlement.Name</p>
-    </div>
+    @if (Model.Settlement != null)
+    {
+        <div>
+            <p>@Model.Settlement.Region.Name region, @Model.Settlement.Name</p>
+        </div>
+    }
     <div>
         <hr class="hr my-3" />
         <p>Description:</p>

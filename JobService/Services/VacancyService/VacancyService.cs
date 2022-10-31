@@ -66,12 +66,34 @@ namespace JobService.Services.VacancyService
             return _dbContext.JobVacancies!.Where(v => v.Id.Equals(vacancyId)).Include(v => v.Settlement).ThenInclude(v => v!.Region).FirstOrDefault();
         }
 
-        public List<JobVacancy> searchJobVacancies(string searchInput)
+        public List<JobVacancy> SearchJobVacancies(string? searchInput, int? settlementId)
         {
-            return _dbContext.JobVacancies!.OrderBy(v => v.creationTime).Where(v => v.TitleLowerCase!.Contains(searchInput) || v.DescriptionLowerCase!.Contains(searchInput)).ToList();
+            if (searchInput != null)
+            {
+                if (settlementId == null)
+                {
+                    return _dbContext.JobVacancies!.OrderBy(v => v.creationTime).Where(v => v.TitleLowerCase!.Contains(searchInput) || v.DescriptionLowerCase!.Contains(searchInput)).ToList();
+                }
+                else
+                {
+                    return _dbContext.JobVacancies!.Include(v => v.Settlement).Where(v => v.Settlement!.Id.Equals(settlementId) && (v.TitleLowerCase!.Contains(searchInput) || v.DescriptionLowerCase!.Contains(searchInput))).ToList();
+                }
+            }
+            else
+            {
+                if (settlementId == null)
+                {
+                    throw new InvalidOperationException("No search params!");
+                }
+                else
+                {
+                    return _dbContext.JobVacancies!.Include(v => v.Settlement).Where(v => v.Settlement!.Id.Equals(settlementId)).ToList();
+                }
+            }
+
         }
 
-        public List<JobVacancy> userJobVacancies(string username)
+        public List<JobVacancy> UserJobVacancies(string username)
         {
             User? user = _dbContext.Users!.FirstOrDefault(u => u.Username == username);
             if (user is null)

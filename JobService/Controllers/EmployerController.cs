@@ -44,7 +44,7 @@ namespace JobService.Controllers
                 return LocalRedirect(Url.Action("Login", "Authorization")!);
             }
 
-            var jobVacations = _vacancyService.userJobVacancies(User.Identity!.Name!);
+            var jobVacations = _vacancyService.UserJobVacancies(User.Identity!.Name!);
 
             return View(jobVacations);
         }

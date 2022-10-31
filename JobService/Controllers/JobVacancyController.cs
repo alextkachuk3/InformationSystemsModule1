@@ -16,7 +16,7 @@ namespace JobService.Controllers
             _vacancyService = vacancyService;
         }
 
-        public IActionResult Index(int jobVacancyId)
+        public IActionResult Index(int? jobVacancyId)
         {
             if (HttpContext.Request.Cookies.ContainsKey("mode"))
             {
@@ -37,9 +37,20 @@ namespace JobService.Controllers
                 ViewBag.Mode = "jobseeker";
             }
 
-            var vacancy = _vacancyService.GetVacancy(jobVacancyId);
+            if (jobVacancyId == null)
+            {
+                return LocalRedirect("~/");
+            }
+            else
+            {
+                var vacancy = _vacancyService.GetVacancy((int)jobVacancyId);
+                return View(vacancy);
+            }            
+        }
 
-            return View(vacancy);
+        public IActionResult Search(string? searchWord, int? settlementId)
+        {
+            return View(_vacancyService.SearchJobVacancies(searchWord, settlementId));
         }
     }
 }

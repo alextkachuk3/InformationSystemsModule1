@@ -11,8 +11,8 @@ namespace JobService.Services.VacancyService
 
         void DeleteVacancy(int vacancyId, string username);
 
-        List<JobVacancy> userJobVacancies(string username);
+        List<JobVacancy> UserJobVacancies(string username);
 
-        List<JobVacancy> searchJobVacancies(string searchInput);
+        List<JobVacancy> SearchJobVacancies(string? searchInput, int? settlementId);
     }
 }
