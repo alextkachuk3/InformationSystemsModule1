@@ -7,11 +7,11 @@ namespace JobService.Controllers
 {
     public class EmployerController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<EmployerController> _logger;
         private readonly IVacancyService _vacancyService;
         private readonly ISettlementService _settlementService;
 
-        public EmployerController(ILogger<HomeController> logger, IVacancyService vacancyService, ISettlementService settlementService)
+        public EmployerController(ILogger<EmployerController> logger, IVacancyService vacancyService, ISettlementService settlementService)
         {
             _logger = logger;
             _vacancyService = vacancyService;
@@ -49,11 +49,11 @@ namespace JobService.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult AddVacancy(string title, string salary, string description)
+        public IActionResult AddVacancy(string title, int? settlementId, string salary, string description)
         {
             var user = HttpContext.User.Identity;
 
-            _vacancyService.AddVacancy(user!.Name!, title, int.Parse(salary), description);
+            _vacancyService.AddVacancy(user!.Name!, title, settlementId, int.Parse(salary), description);
             return LocalRedirect("~/employer");
         }
 

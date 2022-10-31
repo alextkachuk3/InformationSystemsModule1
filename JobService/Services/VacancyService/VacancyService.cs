@@ -12,14 +12,19 @@ namespace JobService.Services.VacancyService
             _dbContext = dbContext;
         }
 
-        public void AddVacancy(string username, string title, int salary, string description)
+        public void AddVacancy(string username, string title, int? settlementId, int salary, string description)
         {
             User? user = _dbContext.Users!.FirstOrDefault(u => u.Username == username);
             if (user is null)
                 throw new InvalidOperationException("User with username: " + username + " not exists.");
             try
             {
-                _dbContext.JobVacancies!.Add(new JobVacancy(user, title, salary, description));
+                var jobVacancy = new JobVacancy(user, title, salary, description);
+                if (settlementId != null)
+                {
+                    jobVacancy.Settlement = _dbContext.Settlements!.Where(s => s.Id.Equals(settlementId)).FirstOrDefault();
+                }
+                _dbContext.JobVacancies!.Add(jobVacancy);
             }
             catch
             {

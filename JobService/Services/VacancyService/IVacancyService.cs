@@ -5,7 +5,7 @@ namespace JobService.Services.VacancyService
 {
     public interface IVacancyService
     {
-        void AddVacancy(string username, string title, int salary, string description);
+        void AddVacancy(string username, string title, int? settlementId, int salary, string description);
 
         void DeleteVacancy(int id);
 
