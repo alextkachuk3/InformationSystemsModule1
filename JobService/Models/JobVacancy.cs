@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobService.Models
 {
@@ -22,15 +23,19 @@ namespace JobService.Models
         public User? User { get; set; }
 
         [Required]
+        [StringLength(maximumLength: 100)]
         public string? Title { get; set; }
 
         [Required]
+        [StringLength(maximumLength: 3000)]
         public string? Description { get; set; }
-
+        
         [Required]
+        [StringLength(maximumLength: 100)]
         public string? TitleLowerCase { get; set; }
-
+        
         [Required]
+        [StringLength(maximumLength: 3000)]
         public string? DescriptionLowerCase { get; set; }
 
         [Required]

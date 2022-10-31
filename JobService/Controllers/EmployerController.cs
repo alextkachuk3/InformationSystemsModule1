@@ -60,6 +60,8 @@ namespace JobService.Controllers
         public IActionResult AddVacancy(string title, int? settlementId, string salary, string description)
         {
             var user = HttpContext.User.Identity;
+            if (salary == null)
+                salary = "0";
             _vacancyService.AddVacancy(user!.Name!, title, settlementId, int.Parse(salary), description);
             return LocalRedirect("~/employer");
         }
