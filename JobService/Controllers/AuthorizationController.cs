@@ -58,15 +58,6 @@ namespace JobService.Controllers
 
                 claims.Add(new Claim(ClaimTypes.Name, username));
 
-                if (username == "admin")
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, user.Role!));
-                }
-                else
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, user.Role!));
-                }
-
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
 
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));

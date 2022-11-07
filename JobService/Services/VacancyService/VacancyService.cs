@@ -61,6 +61,41 @@ namespace JobService.Services.VacancyService
             }
         }
 
+        public void EditVacancy(int vacancyId, string username, string title, int? settlementId, int salary, string description)
+        {
+            User? user = _dbContext.Users!.FirstOrDefault(u => u.Username == username);
+            JobVacancy? jobVacancy = _dbContext.JobVacancies!.Where(v => v.Id == vacancyId).Include(v => v.Settlement).FirstOrDefault();
+            if (user == null)
+                throw new InvalidOperationException("User with username: " + username + " not exists.");
+            if (jobVacancy == null)
+                throw new InvalidOperationException("Vacancy with id: " + vacancyId + " not exists.");
+            try
+            {
+                if (settlementId != null)
+                {
+                    jobVacancy.Settlement = _dbContext.Settlements!.Where(s => s.Id.Equals(settlementId)).FirstOrDefault();
+                }
+                else
+                {
+                    jobVacancy.Settlement = null;
+                }
+
+                jobVacancy.Title = title;
+                jobVacancy.Salary = salary;
+                jobVacancy.Description = description;
+                jobVacancy.TitleLowerCase = title.ToLower();
+                jobVacancy.DescriptionLowerCase = description.ToLower();
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                _dbContext.SaveChanges();
+            }
+        }
+
         public JobVacancy? GetVacancy(int vacancyId)
         {
             return _dbContext.JobVacancies!.Where(v => v.Id.Equals(vacancyId)).Include(v => v.Settlement).ThenInclude(v => v!.Region).FirstOrDefault();

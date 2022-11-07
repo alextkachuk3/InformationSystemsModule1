@@ -39,7 +39,7 @@ namespace JobService.Controllers
                 ViewBag.Mode = "employer";
             }
 
-            if(!HttpContext.User!.Identity!.IsAuthenticated)
+            if (!HttpContext.User!.Identity!.IsAuthenticated)
             {
                 return LocalRedirect(Url.Action("Login", "Authorization")!);
             }
@@ -47,6 +47,19 @@ namespace JobService.Controllers
             var jobVacations = _vacancyService.UserJobVacancies(User.Identity!.Name!);
 
             return View(jobVacations);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Index(List<int>? vacationsIds)
+        {
+            if (vacationsIds == null)
+                return Index();
+            foreach (var id in vacationsIds)
+            {                
+                _vacancyService.DeleteVacancy(id, HttpContext.User!.Identity!.Name!);
+            }
+            return Index();
         }
 
         public IActionResult AddVacancy()
@@ -63,6 +76,24 @@ namespace JobService.Controllers
             if (salary == null)
                 salary = "0";
             _vacancyService.AddVacancy(user!.Name!, title, settlementId, int.Parse(salary), description);
+            return LocalRedirect("~/employer");
+        }
+
+        [Authorize]
+        public IActionResult EditVacancy(int jobVacancyId)
+        {
+            var vacancy = _vacancyService.GetVacancy(jobVacancyId);
+            return View(vacancy);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult EditVacancy(int vacancyId, string title, int? settlementId, string salary, string description)
+        {
+            var user = HttpContext.User.Identity;
+            if (salary == null)
+                salary = "0";
+            _vacancyService.EditVacancy(vacancyId, user!.Name!, title, settlementId, int.Parse(salary), description);
             return LocalRedirect("~/employer");
         }
 

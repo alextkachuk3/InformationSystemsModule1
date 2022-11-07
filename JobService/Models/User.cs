@@ -14,7 +14,6 @@ namespace JobService.Models
             PasswordHash = password;
             FirstName = firstName;
             LastName = lastName;
-            Role = "user";
         }
 
         public bool CheckCredentials(string password)
@@ -30,9 +29,6 @@ namespace JobService.Models
 
         [Required]
         public string? PasswordHash { get; set; }
-
-        [Required]
-        public string? Role { get; set; }
 
         [Required]
         [StringLength(maximumLength: 100)]

@@ -17,8 +17,13 @@ namespace JobService.Controllers
         [HttpPost]
         public JsonResult GetRegionSettlements(int regionId)
         {
-            var settlements = _settlementService.GetRegionSettlementsList(regionId);
-            return new JsonResult(Ok(settlements));
+            return new JsonResult(Ok(_settlementService.GetRegionSettlementsList(regionId)));
+        }
+
+        [HttpGet]
+        public JsonResult GetRegions()
+        {
+            return new JsonResult(Ok(_settlementService.GetRegionsList()));
         }
     }
 }
